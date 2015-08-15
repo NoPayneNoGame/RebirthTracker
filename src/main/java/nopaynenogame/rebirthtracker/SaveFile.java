@@ -9,6 +9,7 @@ public class SaveFile {
 	private String fileAchieves = "";
 	private String fileItems = "";
 	private String fileChallenges = "";
+	private Boolean valid = false;
 	
 	public SaveFile(String filePath) {
 		try {
@@ -34,6 +35,10 @@ public class SaveFile {
 		return this.fileChallenges;
 	}
 	
+	public Boolean isValid() {
+		return this.valid;
+	}
+	
 	private void getData(String filePath) throws IOException {
 		FileInputStream save = null;
 		try{
@@ -53,6 +58,7 @@ public class SaveFile {
 		} finally {
 			if (save != null) {
 				save.close();
+				this.valid = true;
 			}
 		}
 	}

@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -13,11 +14,15 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 import main.java.nopaynenogame.rebirthtracker.ImageTableModel;
+import main.java.nopaynenogame.rebirthtracker.ResourceFile;
+import main.java.nopaynenogame.rebirthtracker.SaveFile;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -27,6 +32,25 @@ public class RebirthTrackerGui {
 	private JFrame frame;
 	private JTable table;
 	private JTextField fileLocTextField;
+	
+	private static String saveLocation;
+	
+	private static SaveFile save = null;
+	
+	private static String resourceLoc = "src/main/resources/";
+	private static String achieveLoc = resourceLoc + "Achievements.txt";
+	private static String itemLoc = resourceLoc + "Items.txt";
+	private static String challengeLoc = resourceLoc + "Challenges.txt";
+	
+	private static ResourceFile achieveFile = new ResourceFile(achieveLoc);
+	private static ResourceFile itemFile = new ResourceFile(itemLoc);
+	private static ResourceFile challengeFile = new ResourceFile(challengeLoc);
+	
+	private static HashMap<String, String> achieveMap = achieveFile.toMap();
+	private static HashMap<String, String> itemMap = itemFile.toMap();
+	private static HashMap<String, String> challengeMap = challengeFile.toMap();
+	
+	private static Boolean running = true;
 
 	/**
 	 * Launch the application.
@@ -37,6 +61,7 @@ public class RebirthTrackerGui {
 				try {
 					RebirthTrackerGui window = new RebirthTrackerGui();
 					window.frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -83,6 +108,24 @@ public class RebirthTrackerGui {
 		fileLocTextField.setBounds(10, 20, 181, 20);
 		frame.getContentPane().add(fileLocTextField);
 		fileLocTextField.setColumns(10);
+		fileLocTextField.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub	
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				saveLocation = fileLocTextField.getText();
+				
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+			}
+		});
 		
 		JButton btnBrowse = new JButton("Browse..");
 		btnBrowse.setBounds(201, 19, 99, 23);

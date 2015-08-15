@@ -1,7 +1,11 @@
 package main.java.nopaynenogame.rebirthtracker;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.HashMap;
 
 public class ResourceFile {
@@ -26,11 +30,17 @@ public class ResourceFile {
 		return fileMap;
 	}
 	
+	@Override
+	public String toString() {
+		return fileData;
+	}
+	
 	private String readFile(String fileLoc) throws IOException {
-		FileInputStream file = null;
+		InputStream file = null;
 		String data = "";
+
 		try{
-			file = new FileInputStream(fileLoc);
+			file = this.getClass().getResourceAsStream(fileLoc);
 			int c;
 			while((c = file.read()) != -1) {
 				data += (char)c;

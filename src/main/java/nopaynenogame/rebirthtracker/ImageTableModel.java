@@ -5,6 +5,7 @@ import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
+@SuppressWarnings("serial")
 public class ImageTableModel extends DefaultTableModel {
 
 	public ImageTableModel() {
